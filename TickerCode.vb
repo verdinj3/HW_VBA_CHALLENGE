@@ -1,4 +1,4 @@
-Sub Ticker():
+Sub VBATicker():
 
 'Set Ws as Object Variable'
 Dim Ws As Worksheet
@@ -12,21 +12,33 @@ Ws.Range("J1").Value = "Yearly Change"
 Ws.Range("K1").Value = "Percent Change"
 Ws.Range("L1").Value = "Total Stock Volume"
 
-'Declare TickerName & TickerColumn as Variable'
+'TickerName & TickerColumn as Variable'
 Dim TickerN As String
 Dim TickerC As Long
+
 
 'Ticker'
 TickerN = " "
 TickerC = 2
 
-'Declare Opening and Closing Price as Variable'
+'Opening and Closing Price as Variable'
 Dim OpenP As Double
-Dim ClosingP As Double
-
 OpenP = 0
+
+Dim ClosingP As Double
 ClosingP = 0
 
+'Total Ticker Volume as Variable'
+Dim TtlTV As Double
+TtlTV = 0
+
+'Delta Price & Percent as Variable'
+Dim DeltaP As Double
+DeltaP = 0
+
+Dim DeltaPercent As Double
+DeltaPercent = 0
+        
 'Column Count'
 Dim Lastrow As Long
 Dim i As Long
@@ -78,11 +90,22 @@ OpenP = Ws.Cells(2, 3).Value
                 ' Print the Ticker Name in the Summary Table, Column J
                 Ws.Range("L" & TickerC).Value = TtlTV
              
-            'Add 1 to TickerC count'
+            'Reset'
             TickerC = TickerC + 1
             
-            'Reset Delta'
             DeltaP = 0
+            
+            CloseP = 0
+            
+            DeltaPercent = 0
+            
+            TtlTV = 0
+            
+            OpenP = Ws.Cells(i + 1, 3).Value
+            
+        Else
+        ' Increase the Total Ticker Volume'
+                TtlTV = TtlTV + Ws.Cells(i, 7).Value
             
         End If
 
@@ -91,3 +114,4 @@ OpenP = Ws.Cells(2, 3).Value
 Next Ws
 
 End Sub
+
